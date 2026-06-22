@@ -22,7 +22,7 @@ The architecture follows AWS best practices by separating resources into present
 
 ## Architecture Diagram
 
-![Architecture Diagram](./diagrams/aws-three-tier-architecture.png)
+![Architecture Diagram](diagrams/Diagram- highly -available-multi-az-three-tier-achitecture.png)
 
 ## Network Design
 
