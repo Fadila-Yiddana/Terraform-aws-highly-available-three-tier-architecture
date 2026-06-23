@@ -83,7 +83,7 @@ The Terraform code is designed to implement the architecture shown in the projec
 
 ✅ Auto Scaling Group
 
-🔄 Amazon RDS Multi-AZ
+✅ Amazon RDS Multi-AZ
 
 🔄 Route 53 Integration Planned
 
