@@ -52,9 +52,10 @@ The architecture follows AWS best practices by separating resources into present
 
 ## Tools Used
 
-* Terraform
-* AWS
-* Draw.io
+- Terraform
+- AWS
+- Draw.io
+- GitHub
 
 ## Author
 
