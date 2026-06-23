@@ -57,6 +57,29 @@ The architecture follows AWS best practices by separating resources into present
 - Draw.io
 - GitHub
 
+
+## Key AWS Services Used
+
+- Amazon VPC
+- Amazon EC2
+- Amazon RDS
+- Application Load Balancer (ALB)
+- Auto Scaling Group (ASG)
+- Amazon Route 53 (Architecture Design)
+- Amazon CloudFront (Architecture Design)
+- Internet Gateway
+- Security Groups
+- Terraform
+
+
+## Deployment Status
+
+This project currently focuses on architecture design and Infrastructure as Code development.
+
+The Terraform code has been structured and documented but has not been deployed to a production AWS environment to avoid unnecessary cloud costs.
+
+Future validation and deployment testing will be performed using a cloud sandbox environment.
+
 ## Author
 
 Fadila Yiddana
