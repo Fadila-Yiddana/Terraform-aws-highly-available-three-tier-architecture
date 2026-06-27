@@ -16,11 +16,12 @@ The project follows AWS Well-Architected design principles and demonstrates ente
 
 ## Architecture
 
-The diagram below illustrates the highly available three-tier AWS architecture.
+The diagram below illustrates the high-level architecture of the AWS highly available three-tier application, showing how traffic flows securely through the presentation, application, and database layers across multiple Availability Zones.
 
 ![Terraform AWS Highly Available Three-Tier Architecture](./diagrams/highly-available-three-tier-architecture.png)
 
 *Figure: Highly available AWS three-tier architecture deployed across multiple Availability Zones using Terraform.*
+
 
 ---
 
@@ -56,7 +57,7 @@ Amazon RDS Multi-AZ
 | ------------------------- | ------------------------------------------------------ |
 | Amazon VPC                | Isolates the network environment                       |
 | Public & Private Subnets  | Separates internet-facing and internal resources       |
-| Internet Gateway          | Provides internet connectivityimage                    |
+| Internet Gateway          | Provides internet connectivity                         |
 | Application Load Balancer | Distributes incoming traffic                           |
 | Auto Scaling Group        | Automatically scales EC2 instances                     |
 | Amazon EC2                | Hosts the application layer                            |
