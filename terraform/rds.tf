@@ -6,9 +6,12 @@ resource "aws_db_subnet_group" "main" {
     aws_subnet.private_db_b.id
   ]
 
-  tags = {
-    Name = "Database-Subnet-Group"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "Database-Subnet-Group"
+    }
+  )
 }
 
 

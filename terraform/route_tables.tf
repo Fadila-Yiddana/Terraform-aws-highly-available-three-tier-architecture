@@ -6,9 +6,12 @@ resource "aws_route_table" "public" {
     gateway_id = aws_internet_gateway.main.id
   }
 
-  tags = {
-    Name = "Public-Route-Table"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "Public-Route-Table"
+    }
+  )
 }
 
 resource "aws_route_table_association" "public_a" {

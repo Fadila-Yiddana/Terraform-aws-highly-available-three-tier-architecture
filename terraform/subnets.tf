@@ -14,9 +14,12 @@ resource "aws_subnet" "public_b" {
   availability_zone       = "us-east-1b"
   map_public_ip_on_launch = true
 
-  tags = {
-    Name = "Public-Subnet-B"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "Public-Subnet-B"
+    }
+  )
 }
 
 resource "aws_subnet" "private_app_a" {

@@ -7,9 +7,12 @@ resource "aws_launch_template" "app" {
     aws_security_group.ec2_sg.id
   ]
 
-  tags = {
-    Name = "App-Launch-Template"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "App-Launch-Template"
+    }
+  )
 }
 
 

@@ -26,9 +26,12 @@ resource "aws_security_group" "alb_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "ALB-SG"
-  }
+  tags = merge(
+    local.common_tags,
+    {
+      Name = "ALB-SG"
+    }
+  )
 }
 
 
