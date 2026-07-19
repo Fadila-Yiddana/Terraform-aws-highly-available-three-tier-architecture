@@ -38,8 +38,7 @@ variable "db_username" {
 }
 
 variable "db_password" {
-  description = "Database password"
+  description = "Database master password for the Amazon RDS instance."
   type        = string
   sensitive   = true
-  default     = "example-password-not-for-production"
 }
