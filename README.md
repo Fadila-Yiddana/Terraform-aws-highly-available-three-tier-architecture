@@ -198,8 +198,13 @@ The infrastructure was successfully deployed and tested in a cloud training envi
 
 The Terraform configuration is deployment-ready and can be provisioned in any AWS account with valid credentials by running:
 
-```bash
+git clone <repository-url>
+
+cd terraform
+
 terraform init
+
 terraform plan
+
 terraform apply
 ```
