@@ -108,15 +108,26 @@ Amazon RDS Multi-AZ
 ## Repository Structure
 
 ```text
-.
+
 ├── diagrams/
 │   └── highly-available-three-tier-architecture.png
-├── terraform/
-│   ├── main.tf
-│   ├── provider.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   └── terraform.tfvars
+terraform/
+├── alb.tf
+├── autoscaling.tf
+├── data.tf
+├── internet_gateway.tf
+├── locals.tf
+├── main.tf
+├── outputs.tf
+├── provider.tf
+├── rds.tf
+├── route_tables.tf
+├── security_groups.tf
+├── subnets.tf
+├── terraform.tfvars
+├── variables.tf
+├── versions.tf
+└── vpc.tf
 ├── .gitignore
 └── README.md
 ```
