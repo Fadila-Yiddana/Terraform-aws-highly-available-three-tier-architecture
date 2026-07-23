@@ -178,7 +178,7 @@ terraform/
 * Enable centralized logging with Amazon CloudWatch
 * Configure AWS Backup
 * Add monitoring and alerting
-* Deploy using Terraform modules
+* Refactor infrastructure into reusable Terraform modules
 
 ---
 
