@@ -154,17 +154,20 @@ terraform/
 
 ## Skills Demonstrated
 
-* Infrastructure as Code (Terraform)
-* AWS Networking
-* Amazon VPC
-* High Availability Design
-* Multi-AZ Architecture
-* Auto Scaling
-* Application Load Balancers
-* Amazon EC2
-* Amazon RDS
-* Cloud Security
-* AWS Well-Architected Framework
+Infrastructure as Code (Terraform)
+Terraform Variables
+Terraform Outputs
+Terraform Data Sources
+Terraform Locals
+Terraform State Management
+Modular Terraform File Organization
+AWS Networking
+Amazon VPC
+Auto Scaling
+Application Load Balancer
+Amazon RDS
+Cloud Security
+AWS Well-Architected Framework
 
 ---
 
