@@ -179,6 +179,17 @@ terraform/
 
 ---
 
+
+## Prerequisites
+
+
+* Terraform v1.5 or later
+* AWS CLI configured
+* AWS account with appropriate IAM permissions
+* Git
+
+---
+
 ## Deployment Notes
 
 This project was developed as part of my hands-on cloud engineering portfolio using Terraform and AWS.
