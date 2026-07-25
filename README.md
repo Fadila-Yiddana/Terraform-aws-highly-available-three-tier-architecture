@@ -108,15 +108,26 @@ Amazon RDS Multi-AZ
 ## Repository Structure
 
 ```text
-.
+
 ├── diagrams/
 │   └── highly-available-three-tier-architecture.png
-├── terraform/
-│   ├── main.tf
-│   ├── provider.tf
-│   ├── variables.tf
-│   ├── outputs.tf
-│   └── terraform.tfvars
+terraform/
+├── alb.tf
+├── autoscaling.tf
+├── data.tf
+├── internet_gateway.tf
+├── locals.tf
+├── main.tf
+├── outputs.tf
+├── provider.tf
+├── rds.tf
+├── route_tables.tf
+├── security_groups.tf
+├── subnets.tf
+├── terraform.tfvars
+├── variables.tf
+├── versions.tf
+└── vpc.tf
 ├── .gitignore
 └── README.md
 ```
@@ -137,20 +148,23 @@ Amazon RDS Multi-AZ
 | Auto Scaling Configuration | ✅                                       |
 | Amazon RDS Multi-AZ Design | ✅                                       |
 | Terraform Validation       | ✅                                       |
-| Deployment                 | ✅ Completed in AWS training environment |
+| Deployment                 | ✅ Successfully deployed and validated in AWS training environment |
 
 ---
 
 ## Skills Demonstrated
 
 * Infrastructure as Code (Terraform)
+* Terraform Variables
+* Terraform Outputs
+* Terraform Data Sources
+* Terraform Locals
+* Terraform State Management
+* Modular Terraform File Organization
 * AWS Networking
 * Amazon VPC
-* High Availability Design
-* Multi-AZ Architecture
 * Auto Scaling
-* Application Load Balancers
-* Amazon EC2
+* Application Load Balancer
 * Amazon RDS
 * Cloud Security
 * AWS Well-Architected Framework
@@ -164,7 +178,18 @@ Amazon RDS Multi-AZ
 * Enable centralized logging with Amazon CloudWatch
 * Configure AWS Backup
 * Add monitoring and alerting
-* Deploy using Terraform modules
+* Refactor infrastructure into reusable Terraform modules
+
+---
+
+
+## Prerequisites
+
+
+* Terraform v1.5 or later
+* AWS CLI configured
+* AWS account with appropriate IAM permissions
+* Git
 
 ---
 
@@ -176,8 +201,13 @@ The infrastructure was successfully deployed and tested in a cloud training envi
 
 The Terraform configuration is deployment-ready and can be provisioned in any AWS account with valid credentials by running:
 
-```bash
+git clone <https://github.com/Fadila-Yiddana/Terraform-aws-highly-available-three-tier-architecture/blob/main/README.md>
+
+cd terraform
+
 terraform init
+
 terraform plan
+
 terraform apply
 ```
