@@ -14,18 +14,8 @@ resource "aws_route_table" "public" {
   )
 }
 
-resource "aws_route_table_association" "public_a" {
-  subnet_id      = aws_subnet.public_a.id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_route_table_association" "public_b" {
-  subnet_id      = aws_subnet.public_b.id
-  route_table_id = aws_route_table.public.id
-}
-
-
-resource "aws_route_table" "private" {
+# App tier - has a route out through the NAT Gateway
+resource "aws_route_table" "private_app" {
   vpc_id = aws_vpc.main.id
 
   route {
@@ -34,27 +24,35 @@ resource "aws_route_table" "private" {
   }
 
   tags = {
-    Name = "Private-Route-Table"
+    Name = "Private-App-Route-Table"
   }
 }
+
 resource "aws_route_table_association" "private_app_a" {
   subnet_id      = aws_subnet.private_app_a.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private_app.id
 }
 
 resource "aws_route_table_association" "private_app_b" {
   subnet_id      = aws_subnet.private_app_b.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private_app.id
+}
+
+# Database tier - no route anywhere outside the VPC, intentionally
+resource "aws_route_table" "private_db" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "Private-DB-Route-Table"
+  }
 }
 
 resource "aws_route_table_association" "private_db_a" {
   subnet_id      = aws_subnet.private_db_a.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private_db.id
 }
 
 resource "aws_route_table_association" "private_db_b" {
   subnet_id      = aws_subnet.private_db_b.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private_db.id
 }
-
-
