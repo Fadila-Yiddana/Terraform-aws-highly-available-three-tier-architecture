@@ -7,6 +7,16 @@ resource "aws_launch_template" "app" {
     aws_security_group.ec2_sg.id
   ]
 
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    dnf update -y
+    dnf install -y httpd
+    systemctl enable httpd
+    systemctl start httpd
+    echo "<h1>It works! Server: $(hostname -f)</h1>" > /var/www/html/index.html
+  EOF
+  )
+
   tags = merge(
     local.common_tags,
     {
