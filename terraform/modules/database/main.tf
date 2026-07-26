@@ -1,13 +1,35 @@
+resource "aws_security_group" "rds_sg" {
+  name        = "rds-security-group"
+  description = "Allow database traffic from EC2"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description     = "MySQL from EC2"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [var.ec2_sg_id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "RDS-SG"
+  }
+}
+
 resource "aws_db_subnet_group" "main" {
   name = "database-subnet-group"
 
-  subnet_ids = [
-    aws_subnet.private_db_a.id,
-    aws_subnet.private_db_b.id
-  ]
+  subnet_ids = var.private_db_subnet_ids
 
   tags = merge(
-    local.common_tags,
+    var.common_tags,
     {
       Name = "Database-Subnet-Group"
     }
@@ -41,4 +63,3 @@ resource "aws_db_instance" "main" {
 
   publicly_accessible = false
 }
-
