@@ -112,29 +112,31 @@ terraform/
 
 ├── modules/
 
-│   ├── networking/     # VPC, subnets, IGW, NAT Gateway, route tables
+   ├── networking/     # VPC, subnets, IGW, NAT Gateway, route tables
 
-│   │   ├── main.tf
+     ├── main.tf
 
-│   │   ├── variables.tf
+      ├── variables.tf
 
-│   │   └── outputs.tf
+   │   └── outputs.tf
+   
 
-│   ├── compute/        # Security groups, IAM/SSM, launch template, ASG, ALB
+  ├── compute/        # Security groups, IAM/SSM, launch template, ASG, ALB
 
-│   │   ├── main.tf
+      ├── main.tf
 
-│   │   ├── variables.tf
+      ├── variables.tf
 
-│   │   └── outputs.tf
+     └── outputs.tf
+     
 
-│   └── database/       # RDS security group, subnet group, RDS instance
+   └── database/       # RDS security group, subnet group, RDS instance
 
-│       ├── main.tf
+      ├── main.tf
 
-│       ├── variables.tf
+     ├── variables.tf
 
-│       └── outputs.tf
+     └── outputs.tf
 
 
 
