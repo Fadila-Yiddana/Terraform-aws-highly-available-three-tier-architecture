@@ -105,6 +105,7 @@ Amazon Route 53 and Amazon CloudFront are planned additions — see **Future Imp
 
 
 ├── diagrams/
+
    └── highly-available-three-tier-architecture.png
 
 
