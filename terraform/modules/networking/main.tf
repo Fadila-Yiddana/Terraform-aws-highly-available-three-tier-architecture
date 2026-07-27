@@ -18,9 +18,12 @@ resource "aws_subnet" "public_a" {
   availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Public-Subnet-A"
   }
+  )
 }
 resource "aws_subnet" "public_b" {
   vpc_id                  = aws_vpc.main.id
@@ -41,18 +44,24 @@ resource "aws_subnet" "private_app_a" {
   cidr_block        = "10.0.3.0/24"
   availability_zone = "us-east-1a"
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-App-Subnet-A"
   }
+  )
 }
 resource "aws_subnet" "private_app_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.4.0/24"
   availability_zone = "us-east-1b"
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-App-Subnet-B"
   }
+  )
 }
 
 resource "aws_subnet" "private_db_a" {
@@ -60,18 +69,25 @@ resource "aws_subnet" "private_db_a" {
   cidr_block        = "10.0.5.0/24"
   availability_zone = "us-east-1a"
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-DB-Subnet-A"
   }
+  )
 }
+
 resource "aws_subnet" "private_db_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.6.0/24"
   availability_zone = "us-east-1b"
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-DB-Subnet-B"
   }
+  )
 }
 
 
@@ -147,10 +163,16 @@ resource "aws_route_table" "private_app" {
     nat_gateway_id = aws_nat_gateway.main.id
   }
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-App-Route-Table"
   }
+  )
 }
+
+
+
 
 resource "aws_route_table_association" "private_app_a" {
   subnet_id      = aws_subnet.private_app_a.id
@@ -166,9 +188,12 @@ resource "aws_route_table_association" "private_app_b" {
 resource "aws_route_table" "private_db" {
   vpc_id = aws_vpc.main.id
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "Private-DB-Route-Table"
   }
+  )
 }
 
 resource "aws_route_table_association" "private_db_a" {

@@ -55,9 +55,12 @@ resource "aws_security_group" "ec2_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "EC2-SG"
   }
+  )
 }
 
 data "aws_ami" "amazon_linux" {
@@ -146,9 +149,12 @@ resource "aws_lb_target_group" "app" {
     unhealthy_threshold = 2
   }
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "App-Target-Group"
   }
+  )
 }
 
 resource "aws_lb_listener" "http" {

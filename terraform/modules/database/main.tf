@@ -18,9 +18,12 @@ resource "aws_security_group" "rds_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
+  tags = merge(
+  var.common_tags,
+  {
     Name = "RDS-SG"
   }
+  )
 }
 
 resource "aws_db_subnet_group" "main" {
