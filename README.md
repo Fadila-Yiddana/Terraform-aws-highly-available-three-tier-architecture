@@ -31,23 +31,19 @@ Client
 
 ↓
 
-Amazon CloudFront
+Application Load Balancer (public subnets)
 
 ↓
 
-Amazon Route 53
+Auto Scaling Group (Amazon EC2, private app subnets)
 
 ↓
 
-Application Load Balancer
+Amazon RDS Multi-AZ (private db subnets, no internet route)
 
-↓
+---
 
-Auto Scaling Group (Amazon EC2)
-
-↓
-
-Amazon RDS Multi-AZ
+Amazon Route 53 and Amazon CloudFront are planned additions — see **Future Improvements** below. They are not yet implemented in this code.
 
 ---
 
@@ -56,15 +52,16 @@ Amazon RDS Multi-AZ
 | AWS Service               | Purpose                                                |
 | ------------------------- | ------------------------------------------------------ |
 | Amazon VPC                | Isolates the network environment                       |
-| Public & Private Subnets  | Separates internet-facing and internal resources       |
-| Internet Gateway          | Provides internet connectivity                         |
+| Public, Private App & Private DB Subnets | Three-tier network isolation across 2 AZs |
+| Internet Gateway          | Public subnet internet access                          |
+| NAT Gateway                | Outbound-only internet access for the app tier         |
 | Application Load Balancer | Distributes incoming traffic                           |
 | Auto Scaling Group        | Automatically scales EC2 instances                     |
 | Amazon EC2                | Hosts the application layer                            |
+| IAM Role & Instance Profile | SSM Session Manager access, no open management ports |
 | Amazon RDS Multi-AZ       | Provides highly available relational database services |
-| Amazon Route 53           | DNS management                                         |
-| Amazon CloudFront         | Global content delivery                                |
-| Security Groups           | Controls network access                                |
+| Security Groups           | Controls network access between tiers                  |
+| S3 + DynamoDB (backend)   | Remote Terraform state storage and locking              |
 | Terraform                 | Infrastructure as Code provisioning                    |
 
 ---
@@ -104,52 +101,52 @@ Amazon RDS Multi-AZ
 * Infrastructure as Code using Terraform
 
 ---
-
 ## Repository Structure
 
-```text
 
 ├── diagrams/
 │   └── highly-available-three-tier-architecture.png
 terraform/
-├── alb.tf
-├── autoscaling.tf
-├── data.tf
-├── internet_gateway.tf
-├── locals.tf
-├── main.tf
-├── outputs.tf
-├── provider.tf
-├── rds.tf
-├── route_tables.tf
-├── security_groups.tf
-├── subnets.tf
-├── terraform.tfvars
+├── modules/
+│   ├── networking/     # VPC, subnets, IGW, NAT Gateway, route tables
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   ├── compute/        # Security groups, IAM/SSM, launch template, ASG, ALB
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   └── database/       # RDS security group, subnet group, RDS instance
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+├── main.tf              # Wires the three modules together
 ├── variables.tf
-├── versions.tf
-└── vpc.tf
-├── .gitignore
-└── README.md
-```
+├── outputs.tf
+├── locals.tf
+├── provider.tf
+├── versions.tf           # Includes S3 remote backend
+├── backend.hcl.example
+├── terraform.tfvars.example
+└── .gitignore
 
 ---
 
 ## Project Status
 
-| Component                  | Status                                  |
-| -------------------------- | --------------------------------------- |
-| Repository Created         | ✅                                       |
-| Architecture Diagram       | ✅                                       |
-| Terraform Configuration    | ✅                                       |
-| VPC Design                 | ✅                                       |
-| Networking Configuration   | ✅                                       |
-| Security Groups            | ✅                                       |
-| Application Load Balancer  | ✅                                       |
-| Auto Scaling Configuration | ✅                                       |
-| Amazon RDS Multi-AZ Design | ✅                                       |
-| Terraform Validation       | ✅                                       |
-| Deployment                 | ✅ Successfully deployed and validated in AWS training environment |
-
+| Component                     | Status                                              |
+| ------------------------------ | --------------------------------------------------- |
+| Repository Created             | ✅                                                    |
+| Architecture Diagram           | ✅                                                    |
+| Modular Terraform Structure    | ✅ (networking / compute / database modules)         |
+| VPC & Network Isolation Design | ✅ (public / private-app / private-db tiers)         |
+| Security Groups & IAM/SSM      | ✅                                                    |
+| Application Load Balancer      | ✅                                                    |
+| Auto Scaling Configuration     | ✅ (includes user_data web server bootstrap)         |
+| Amazon RDS Multi-AZ Design     | ✅                                                    |
+| Remote State (S3 Backend)      | ✅ (configured, not yet initialized against a live bucket) |
+| Terraform Validation           | ✅ `terraform validate` passes on full project        |
+| Live Deployment                | ⏳ Previously deployed and validated in a temporary AWS training/sandbox environment; not currently live |
 ---
 
 ## Skills Demonstrated
@@ -197,17 +194,24 @@ terraform/
 
 This project was developed as part of my hands-on cloud engineering portfolio using Terraform and AWS.
 
-The infrastructure was successfully deployed and tested in a cloud training environment during my AWS training at AmaliTech Ghana. As the training lab environments were temporary, the deployed resources were terminated after the lab sessions expired.
+The infrastructure was successfully deployed and tested in a cloud training environment during my AWS training at AmaliTech Ghana. As training lab environments are temporary, the deployed resources were terminated after each lab session expired.
 
-The Terraform configuration is deployment-ready and can be provisioned in any AWS account with valid credentials by running:
+The Terraform configuration is deployment-ready and can be provisioned in any AWS account with valid credentials:
 
-git clone <https://github.com/Fadila-Yiddana/Terraform-aws-highly-available-three-tier-architecture/blob/main/README.md>
+```bash
+git clone https://github.com/Fadila-Yiddana/Terraform-aws-highly-available-three-tier-architecture.git
+cd Terraform-aws-highly-available-three-tier-architecture/terraform
 
-cd terraform
+# Set up your backend config (see backend.hcl.example) and initialize
+terraform init -backend-config=backend.hcl
 
-terraform init
+# Set up your variables (see terraform.tfvars.example)
+cp terraform.tfvars.example terraform.tfvars
+
+# Set the database password as an environment variable - never in a file
+export TF_VAR_db_password="your-password-here"
 
 terraform plan
-
 terraform apply
 ```
+
