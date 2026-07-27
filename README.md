@@ -106,6 +106,8 @@ Amazon Route 53 and Amazon CloudFront are planned additions — see **Future Imp
 
 ├── diagrams/
 │   └── highly-available-three-tier-architecture.png
+
+
 terraform/
 ├── modules/
 │   ├── networking/     # VPC, subnets, IGW, NAT Gateway, route tables
@@ -120,15 +122,26 @@ terraform/
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
+
+
 ├── main.tf              # Wires the three modules together
+
 ├── variables.tf
+
 ├── outputs.tf
+
 ├── locals.tf
+
 ├── provider.tf
+
 ├── versions.tf           # Includes S3 remote backend
+
 ├── backend.hcl.example
+
 ├── terraform.tfvars.example
+
 └── .gitignore
+
 
 ---
 
