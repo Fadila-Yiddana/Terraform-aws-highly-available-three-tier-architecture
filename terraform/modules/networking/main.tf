@@ -1,3 +1,7 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 resource "aws_vpc" "main" {
 
   cidr_block           = var.vpc_cidr
@@ -15,20 +19,20 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-  availability_zone       = "us-east-1a"
+  availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Public-Subnet-A"
-  }
+    var.common_tags,
+    {
+      Name = "Public-Subnet-A"
+    }
   )
 }
 resource "aws_subnet" "public_b" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.2.0/24"
-  availability_zone       = "us-east-1b"
+  availability_zone       = data.aws_availability_zones.available.names[1]
   map_public_ip_on_launch = true
 
   tags = merge(
@@ -42,51 +46,51 @@ resource "aws_subnet" "public_b" {
 resource "aws_subnet" "private_app_a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.3.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-App-Subnet-A"
-  }
+    var.common_tags,
+    {
+      Name = "Private-App-Subnet-A"
+    }
   )
 }
 resource "aws_subnet" "private_app_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.4.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-App-Subnet-B"
-  }
+    var.common_tags,
+    {
+      Name = "Private-App-Subnet-B"
+    }
   )
 }
 
 resource "aws_subnet" "private_db_a" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.5.0/24"
-  availability_zone = "us-east-1a"
+  availability_zone = data.aws_availability_zones.available.names[0]
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-DB-Subnet-A"
-  }
+    var.common_tags,
+    {
+      Name = "Private-DB-Subnet-A"
+    }
   )
 }
 
 resource "aws_subnet" "private_db_b" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.6.0/24"
-  availability_zone = "us-east-1b"
+  availability_zone = data.aws_availability_zones.available.names[1]
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-DB-Subnet-B"
-  }
+    var.common_tags,
+    {
+      Name = "Private-DB-Subnet-B"
+    }
   )
 }
 
@@ -164,10 +168,10 @@ resource "aws_route_table" "private_app" {
   }
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-App-Route-Table"
-  }
+    var.common_tags,
+    {
+      Name = "Private-App-Route-Table"
+    }
   )
 }
 
@@ -189,10 +193,10 @@ resource "aws_route_table" "private_db" {
   vpc_id = aws_vpc.main.id
 
   tags = merge(
-  var.common_tags,
-  {
-    Name = "Private-DB-Route-Table"
-  }
+    var.common_tags,
+    {
+      Name = "Private-DB-Route-Table"
+    }
   )
 }
 
