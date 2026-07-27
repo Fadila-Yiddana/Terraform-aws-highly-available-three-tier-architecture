@@ -119,7 +119,7 @@ terraform/
 
       ├── variables.tf
 
-   │   └── outputs.tf
+      └── outputs.tf
    
 
   ├── compute/        # Security groups, IAM/SSM, launch template, ASG, ALB
