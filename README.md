@@ -109,19 +109,33 @@ Amazon Route 53 and Amazon CloudFront are planned additions — see **Future Imp
 
 
 terraform/
+
 ├── modules/
+
 │   ├── networking/     # VPC, subnets, IGW, NAT Gateway, route tables
+
 │   │   ├── main.tf
+
 │   │   ├── variables.tf
+
 │   │   └── outputs.tf
+
 │   ├── compute/        # Security groups, IAM/SSM, launch template, ASG, ALB
+
 │   │   ├── main.tf
+
 │   │   ├── variables.tf
+
 │   │   └── outputs.tf
+
 │   └── database/       # RDS security group, subnet group, RDS instance
+
 │       ├── main.tf
+
 │       ├── variables.tf
+
 │       └── outputs.tf
+
 
 
 ├── main.tf              # Wires the three modules together
